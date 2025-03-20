@@ -31,4 +31,4 @@ pnpm add nest-box
 ```
 
 ## Modules
--[Email Modules](docs/email.md)
+-[Email Modules](docs/en/email.md)
