@@ -1,14 +1,16 @@
 # Email Module
-Provides email functionalities like sending emails using SMTP with Nodemailer.
+
+The Email module provides the functionality to send emails using Nodemailer via SMTP. It allows you to send emails directly within your NestJS application and supports configurable options.
 
 ## Configuration
-You can configure the Email module using the `forRootAsync` method in the `EmailModule`. This allows you to dynamically configure the service using environment variables or a configuration service.
 
-Here’s how to configure the Email module:
+You can configure the Email module using either the `forRoot` or `forRootAsync` method. This allows you to provide static configurations or dynamically load configurations from environment variables or a configuration service.
 
-1. App Module: Import the `EmailModule` and configure it in your application module.
+### Static Configuration
 
-``` typescript
+If you want to provide fixed configuration values directly in the `AppModule`, use the `forRoot` method.
+
+```typescript
 import { Module } from '@nestjs/common';
 import { EmailModule } from 'nest-box';
 import { ConfigModule } from '@nestjs/config';
@@ -16,32 +18,62 @@ import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
     ConfigModule.forRoot({
-            isGlobal: true,
+      isGlobal: true,
     }),
-    // 1. Fixed variables
+    // 1. Fixed configuration values
     EmailModule.forRoot({
-        host: "";
-        port: 587;
-        user: "you-email";
-        pass: "you-email-password";
-        fromName: "from-name";
-        fromEmail: "from-email";
-    }), 
-    // 2. To load environment variables from .env
-    EmailModule.forRootAsync(), 
+      host: 'smtp.example.com',
+      port: 587,
+      user: 'your-email@example.com',
+      pass: 'your-email-password',
+      fromName: 'Your Name',
+      fromEmail: 'your-email@example.com',
+    }),
   ],
 })
 export class AppModule {}
 ```
 
-## Sending an Email
+### Dynamic Configuration
+
+You can also use the `forRootAsync` method to load configurations dynamically from a configuration service or environment variables.
+
+```typescript
+import { Module } from '@nestjs/common';
+import { EmailModule } from 'nest-box';
+import { ConfigModule } from '@nestjs/config';
+
+@Module({
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    // 2. Load configuration from .env file
+    EmailModule.forRootAsync(),
+  ],
+})
+export class AppModule {}
+```
+
+Example `.env` file:
+
+```ini
+# email
+EMAIL_HOST=smtp.example.com
+EMAIL_PORT=587
+EMAIL_USER=your-email@example.com
+EMAIL_PASS=your-email-password
+```
+
+## Sending Emails
+
 The `sendMain` method accepts the following parameters:
 
-* `to`: The recipient email address.
-* `subject`: The subject of the email.
-* `html`: The HTML content of the email.
+- `to`: The recipient's email address.
+- `subject`: The subject of the email.
+- `html`: The HTML content of the email.
 
-``` typescript
+```typescript
 import { Injectable } from '@nestjs/common';
 import { EmailService } from 'nest-box';
 
@@ -57,5 +89,4 @@ export class NotificationService {
     });
   }
 }
-
 ```

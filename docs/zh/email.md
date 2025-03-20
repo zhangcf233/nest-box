@@ -55,6 +55,16 @@ import { ConfigModule } from '@nestjs/config';
 export class AppModule {}
 ```
 
+环境变量示范
+
+```ini
+# email
+EMAIL_HOST=smtp.example.com
+EMAIL_PORT=587
+EMAIL_USER=your-email@example.com
+EMAIL_PASS==your-email-password
+```
+
 ## 发送邮件
 
 `sendMain` 方法接受以下参数：
