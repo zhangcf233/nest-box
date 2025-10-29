@@ -1,7 +1,7 @@
 import { ConfigurableModuleBuilder } from '@nestjs/common';
-import { EmailModuleOptions } from './email.interface';
+import { EmailConfig } from './email.interface';
 
 export const { ConfigurableModuleClass, MODULE_OPTIONS_TOKEN } =
-    new ConfigurableModuleBuilder<EmailModuleOptions>()
+    new ConfigurableModuleBuilder<EmailConfig>()
         .setClassMethodName('forRoot')
         .build();

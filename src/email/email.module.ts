@@ -1,7 +1,7 @@
 import { DynamicModule, Global, Module } from '@nestjs/common';
 import { EmailService } from './email.service';
 import { ConfigurableModuleClass, MODULE_OPTIONS_TOKEN } from './email.options';
-import { EmailModuleOptions } from './email.interface';
+import { EmailConfig } from './email.interface';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Global()
@@ -10,7 +10,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     exports: [EmailService],
 })
 export class EmailModule extends ConfigurableModuleClass {
-    static forRoot(options: EmailModuleOptions): DynamicModule {
+    static forRoot(options: EmailConfig): DynamicModule {
         return {
             module: EmailModule,
             providers: [
